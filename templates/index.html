@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telco Customer Churn Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            text-align: center;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .form-row div {
+            flex: 1;
+            min-width: 200px;
+            margin: 5px;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Telco Customer Churn Prediction</h1>
+    <form action="/predict" method="POST">
+        <div class="form-row">
+            <div>
+                <!-- Senior Citizen Input -->
+                <label for="seniorCitizen">Senior Citizen (0 or 1):</label>
+                <input type="text" name="seniorCitizen" placeholder="0 or 1" required>
+            </div>
+            <div>
+                <!-- Tenure Input -->
+                <label for="tenure">Tenure (Months):</label>
+                <input type="text" name="tenure" placeholder="Number of months" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <!-- Monthly Charges Input -->
+                <label for="monthlyCharges">Monthly Charges:</label>
+                <input type="text" name="monthlyCharges" placeholder="Amount in USD" required>
+            </div>
+            <div>
+                <!-- Total Charges Input -->
+                <label for="totalCharges">Total Charges:</label>
+                <input type="text" name="totalCharges" placeholder="Amount in USD" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <!-- Contract Type -->
+                <label for="contract">Contract Type:</label>
+                <select name="contract" required>
+                    <option value="Month-to-month">Month-to-month</option>
+                    <option value="One year">One year</option>
+                    <option value="Two year">Two year</option>
+                </select>
+            </div>
+            <div>
+                <!-- Paperless Billing -->
+                <label for="paperlessBilling">Paperless Billing (Yes or No):</label>
+                <select name="paperlessBilling" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <!-- Payment Method -->
+                <label for="paymentMethod">Payment Method:</label>
+                <select name="paymentMethod" required>
+                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                    <option value="Electronic check">Electronic check</option>
+                    <option value="Mailed check">Mailed check</option>
+                </select>
+            </div>
+            <div>
+                <!-- Gender -->
+                <label for="gender">Gender:</label>
+                <select name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div>
+                <!-- Partner -->
+                <label for="partner">Partner (Yes or No):</label>
+                <select name="partner" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div>
+                <!-- Dependents -->
+                <label for="dependents">Dependents (Yes or No):</label>
+                <select name="dependents" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        <input type="submit" value="Predict Churn">
+    </form>
+    <div class="result">
+        {% if log_reg_prob %}
+            <p>Logistic Regression Churn Probability: {{ log_reg_prob }}%</p>
+        {% endif %}
+        {% if rf_prob %}
+            <p>Random Forest Churn Probability: {{ rf_prob }}%</p>
+        {% endif %}
+    </div>
+</body>
+</html>
